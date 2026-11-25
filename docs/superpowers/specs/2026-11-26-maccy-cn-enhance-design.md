@@ -1,7 +1,7 @@
 # Maccy 中文增强二开设计规格
 
 日期：2026-11-26  
-状态：设计已获用户批准，待书面规格审阅
+状态：设计已获用户批准；规格已补充「本地交付 + 全局自测」要求，待最终审阅
 
 ## 1. 目标
 
@@ -36,6 +36,8 @@
 - 设置面板 `searchMode` 增加「中文智能」选项，补 `en.lproj` / `zh-Hans.lproj` 文案。
 - `MaccyTests/SearchChineseTests.swift` 单元测试。
 - Xcode Debug 构建与测试验证。
+- 本地交付：仓库 clone 到 `桌面/maccy-cn/`，Debug 构建产物在本机可运行（不自动安装到 `/Applications`，不推送 GitHub）。
+- 全局自测：交付前运行 `python3 -m unittest discover -s ~/.omp/agent/tests -v`，要求退出码 0 并在汇报中给出命令与关键输出。
 
 ### 3.2 不纳入
 
@@ -130,6 +132,8 @@
 3. `xcodebuild -scheme Maccy -configuration Debug build` 成功；失败则记录具体错误并区分环境与改动。
 4. `xcodebuild test` 运行 `SearchChineseTests`，全部通过；原有测试无回归。
 5. 手动运行 App：复制一条中文文本，按 ⇧⌘C 唤起，分别用中文、全拼、首字母搜索，确认命中项与高亮正确；切换回 exact 模式确认行为未变。
+6. 本地交付确认：`桌面/maccy-cn/` 存在且可 `open` 构建出的 `Maccy.app`；说明如何运行，不擅自安装到系统目录或推送远端。
+7. 全局自测：运行 `python3 -m unittest discover -s ~/.omp/agent/tests -v`，退出码 0，并在最终汇报中给出命令与关键输出。
 
 ## 11. 非目标
 
